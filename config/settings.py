@@ -1,6 +1,9 @@
+import os
 from pathlib import Path
 import dj_database_url
-import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -115,5 +118,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'files/uploads')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+INSTALLED_APPS += [
+    'cloudinary_storage',
+    'cloudinary',
+]
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'your_cloud_name',
+    'API_KEY': 'your_api_key',
+    'API_SECRET': 'your_api_secret',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}

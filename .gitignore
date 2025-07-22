@@ -6,3 +6,4 @@ env/
 venv/
 *.sqlite3
 /files/uploads/
+.env
