@@ -5,12 +5,10 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'your-local-secret-key')
+
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = [
-    "web-production-f33c4.up.railway.app",
-    "127.0.0.1",
-    "localhost"
-]
+
+ALLOWED_HOSTS = ['web-production-xxxx.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
     "https://web-production-f33c4.up.railway.app",
@@ -51,7 +49,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
