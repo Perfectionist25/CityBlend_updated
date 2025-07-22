@@ -8,7 +8,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'your-local-secret-key')
 
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['web-production-xxxx.up.railway.app']
+ALLOWED_HOSTS = ['web-production-f33c4.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
     "https://web-production-f33c4.up.railway.app",
