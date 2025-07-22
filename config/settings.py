@@ -12,7 +12,9 @@ ALLOWED_HOSTS = [
     "localhost"
 ]
 
-CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+CSRF_TRUSTED_ORIGINS = [
+    "https://web-production-f33c4.up.railway.app",
+]
 
 INSTALLED_APPS = [
     'modeltranslation',
