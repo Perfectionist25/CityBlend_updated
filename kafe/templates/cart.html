@@ -1,0 +1,183 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        // Проверяем текущий URL и скрываем кнопки в зависимости от языка страницы
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('#ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('#enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+    </script>
+{% block foods_content %}
+
+<div id="enButton">
+    <div class="card mb-4 p-4 has-text-weight-bold is-size-4">
+        <a class="button has-text-left is-danger" href="{% url 'kafe:foods' %}">В главное меню</a>
+    {% if cart_items %}
+        <a style="margin-left: 700px;" class="button has-text-right is-info" href="{% url 'kafe:create_order' %}">Оформить заказ</a>
+    {% endif %}
+        <hr>
+        <div class="columns has-text-centered">
+            <div class="column">
+                <div class="content">Продукты: {{ total_quantity }}</div>
+            </div>
+            <div class="column">
+                <div class="content">Итого: {{ total_price }} $</div>
+            </div>
+        </div>
+    </div>
+    <div class="card p-5">
+        <div class="content">
+            {% if cart_items %}
+
+                <table class="has-text-centered">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Продукт</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Итого</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                <img src="{{ item.food.thumb.url }}" alt="" width="100" height="100">
+                            </td>
+                            <td class="title is-6">{{ item }}</td>
+                            <td>{{ item.food.price }} $</td>
+                            <td>
+                                <div class="quantity ml-3">
+                                    {% if item.quantity > 1 %}
+                                    <a href="{% url 'kafe:edit_cart_item' item.id %}?action=take">
+                                        <h1 class="button is-rounded is-danger is-small mr-3">-</h1>
+                                    </a>
+                                    {% endif %}
+                                    {{ item.quantity }}
+                                    {% if item.quantity < 20 %}
+                                        <a href="{% url 'kafe:edit_cart_item' item.id %}?action=add">
+                                            <h1 class="button is-rounded is-success is-small ml-3">+</h1>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>
+                                {{ item.total_price }} $
+                            </td>
+                            <td>
+                                <a href="{% url 'kafe:delete_cart_item' item.pk %}"
+                                   style="font-size: 20px; color: black">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'kafe:edit_cart_item' item.id %}?action=clear">
+                                    <button style="transition: 1s;" class="button is-danger is-outlined is-rounded is-small">
+                                        Удалить
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="title is-2 has-text-grey has-text-centered">Ничего не добавлено</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div id="ruButton">
+    <div class="card mb-4 p-4 has-text-weight-bold is-size-4">
+        <a class="button has-text-left is-danger" href="{% url 'kafe:foods' %}">Main Menu</a>
+        {% if cart_items %}
+            <a style="margin-left: 700px;" class="button has-text-right is-info" href="{% url 'kafe:create_order' %}">Place Order</a>
+        {% endif %}
+        <hr>
+        <div class="columns has-text-centered">
+            <div class="column">
+                <div class="content">Items: {{ total_quantity }}</div>
+            </div>
+            <div class="column">
+                <div class="content">Total: {{ total_price }} $</div>
+            </div>
+        </div>
+    </div>
+    <div class="card p-5">
+        <div class="content">
+            {% if cart_items %}
+                <table class="has-text-centered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                            <tr>
+                                <td>
+                                    <img src="{{ item.food.thumb.url }}" alt="" width="100" height="100">
+                                </td>
+                                <td class="title is-6">{{ item }}</td>
+                                <td>{{ item.food.price }} $</td>
+                                <td>
+                                    <div class="quantity ml-3">
+                                        {% if item.quantity > 1 %}
+                                            <a href="{% url 'kafe:edit_cart_item' item.id %}?action=take">
+                                                <h1 class="button is-rounded is-danger is-small mr-3">-</h1>
+                                            </a>
+                                        {% endif %}
+                                        {{ item.quantity }}
+                                        {% if item.quantity < 20 %}
+                                            <a href="{% url 'kafe:edit_cart_item' item.id %}?action=add">
+                                                <h1 class="button is-rounded is-success is-small ml-3">+</h1>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {{ item.total_price }} $
+                                </td>
+                                <td>
+                                    <a href="{% url 'kafe:delete_cart_item' item.pk %}"
+                                       style="font-size: 20px; color: black">
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'kafe:edit_cart_item' item.id %}?action=clear">
+                                        <button style="transition: 1s;" class="button is-danger is-outlined is-rounded is-small">
+                                            Remove
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="title is-2 has-text-grey has-text-centered">Nothing added</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

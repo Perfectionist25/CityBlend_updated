@@ -1,0 +1,48 @@
+{% block foods_content %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        // Проверяем текущий URL и скрываем кнопки в зависимости от языка страницы
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('#ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('#enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+</script> 
+    <center>
+        <div id="ruButton" class="title mb-6">MENU</div>
+    </center>
+    <center>
+        <div id="enButton" class="title mb-6">МЕНЮ</div>
+    </center>
+    
+    <div style="display: flex; flex-wrap: wrap;" class="columns">
+        {% for category in categories %}
+        <div style="display: flex; flex-wrap: wrap;" class="column is-3">
+            <a class="subtitle" href="{% url 'kafe:foods' %}?category={{ category.pk }}">
+            <div style="width: 300px; height: 60px; border-radius: 30px; background-color: #dfc8a6;" class="box">
+                <center>
+                    {{ category }}
+                </center>
+            </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+ {% endblock %}
+
+ <style>
+    @media screen and (min-width: 200px) and (max-width: 650px) {
+    .columns{
+        margin-left: 15%;
+    }        
+    }
+ </style>
+
+

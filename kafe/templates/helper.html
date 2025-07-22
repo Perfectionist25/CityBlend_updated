@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'bulma.min.css' %}">
+    <script src="https://kit.fontawesome.com/3d0e27e432.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <title>CityBlend</title>
+</head>
+<body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var currentUrl = window.location.href;
+
+    if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('#ruButton').forEach(function(button) {
+            button.style.display = 'none';
+    });
+    } else if (currentUrl.includes('/en/')) {
+        document.querySelectorAll('#enButton').forEach(function(button) {
+            button.style.display = 'none';
+    });
+        }
+});
+        
+</script>     
+    <div id="enButton" class="container">
+        <div class="box">
+            <a href="{% url 'kafe:foods' %}">
+                <div class="button is-danger">Вернуться в главное меню</div>
+            </a>
+        </div>
+        <div class="container m-6">
+            <h1 class="title">Как сделать заказ:</h1>
+            <h3 class="subtitle">Для того что-бы заказать определенный продукт вам нужно сначала выбрать его и нажать на кнопку "Добавить в корзину". После чего продукт добавиться в корзинку, и вам нужно перейти туда. Далее проверяете тот ли продукт добавился в корзину, и переходите по кнопке "Оформить" в другую страницу где заполняете определенные данные и нажимаете подтвердить. После этого ваш заказ переходит на обработку к нам, и через некоторое время с вами свяжется наш администратор в целях узнать адрес доставки.</h3>
+        </div>
+        <div class="container m-6">
+            <h1 class="title">Конфиденциальная информация сайта для ресторана включает в себя:</h1>
+            <ol>
+                <li><h3 class="subtitle">
+                    Персональные данные клиентов: Имена, адреса, номера телефонов и электронные адреса клиентов, собранные при бронировании столов или оформлении заказов онлайн.
+                </h3></li>
+                <li><h3 class="subtitle">
+                    Финансовая информация: Данные кредитных карт или других способов оплаты, используемых клиентами для оплаты заказов через сайт.
+                </h3></li>
+                <li><h3 class="subtitle">
+                    Данные для входа в систему управления сайтом: Логины, пароли и другие учетные данные администраторов сайта или персонала ресторана, управляющего содержанием и заказами через сайт.
+                </h3></li>
+                <li><h3 class="subtitle">
+                    Конфиденциальные рецепты и меню: Список блюд, их рецепты, специальные ингредиенты или способы приготовления, которые могут считаться коммерческой тайной ресторана.
+                </h3></li>
+                <li><h3 class="subtitle">
+                    Данные о поставщиках и ценах: Информация о поставщиках продуктов, закупочные цены и другие коммерчески значимые данные, которые могут быть использованы конкурентами.
+                </h3></li>
+                <li><h3 class="subtitle">
+                    Соглашения и контракты: Любые юридически обязывающие документы, такие как соглашения с поставщиками или условия использования сайта, которые могут содержать конфиденциальную информацию.
+                </h3></li>
+                <li><h3 class="subtitle">
+                    Интеллектуальная собственность: Логотипы, дизайн сайта, фотографии блюд и интерьера ресторана, которые могут быть защищены авторским правом или торговыми марками.
+                </h3></li>
+            </ol>
+            </div>
+        <div class="box m-6">
+            <h1 class="title">Связь с нами:</h1>
+            <h3 style="transition: 1s;" class="button is-info is-rounded is-outlined"><a href="https://t.me/AliKhaitov">Telegram</a></h3>
+        </div>
+    </div>
+
+    <div id="ruButton" class="container">
+        <div class="box">
+            <a href="{% url 'kafe:foods' %}">
+                <div class="button is-danger">Back to Main Menu</div>
+            </a>
+        </div>
+        <div class="container m-6">
+            <h1 class="title">How to Place an Order:</h1>
+            <h3 class="subtitle">To place an order for a specific product, you need to first select it and click the "Add to Cart" button. Then the product will be added to the cart, and you need to go there. Then you check if the correct product has been added to the cart and proceed by clicking the "Checkout" button, which will take you to another page where you fill in certain details and confirm. After that, your order will be processed by us, and our administrator will contact you shortly to confirm the delivery address.</h3>
+        </div>
+        <div class="container m-6">
+            <h1 class="title">Confidential Site Information for the Restaurant Includes:</h1>
+            <ol>
+                <li>
+                    <h3 class="subtitle">Customer Personal Data: Names, addresses, phone numbers, and email addresses collected when booking tables or placing orders online.</h3>
+                </li>
+                <li>
+                    <h3 class="subtitle">Financial Information: Credit card data or other payment methods used by customers to pay for orders through the website.</h3>
+                </li>
+                <li>
+                    <h3 class="subtitle">Website Management System Login Data: Logins, passwords, and other account details of website administrators or restaurant staff managing content and orders through the website.</h3>
+                </li>
+                <li>
+                    <h3 class="subtitle">Confidential Recipes and Menus: List of dishes, their recipes, special ingredients, or preparation methods that may be considered the restaurant's trade secrets.</h3>
+                </li>
+                <li>
+                    <h3 class="subtitle">Supplier and Price Data: Information about product suppliers, purchase prices, and other commercially sensitive data that may be used by competitors.</h3>
+                </li>
+                <li>
+                    <h3 class="subtitle">Agreements and Contracts: Any legally binding documents, such as agreements with suppliers or website terms of use, that may contain confidential information.</h3>
+                </li>
+                <li>
+                    <h3 class="subtitle">Intellectual Property: Logos, website design, photos of dishes and restaurant interior that may be protected by copyright or trademarks.</h3>
+                </li>
+            </ol>
+        </div>
+        <div class="box m-6">
+            <h1 class="title">Contact Us:</h1>
+            <h3 style="transition: 1s;" class="button is-info is-rounded is-outlined"><a href="https://t.me/AliKhaitov">Telegram</a></h3>
+        </div>
+    </div>
+    
+    </body>
+    </html>

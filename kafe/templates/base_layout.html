@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'bulma.min.css' %}">
+    <script src="https://kit.fontawesome.com/3d0e27e432.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+
+    <title>CityBlend</title>
+</head>
+<body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var currentUrl = window.location.href;
+        
+    if (currentUrl.includes('/ru/')) {
+        document.querySelectorAll('#ruButton').forEach(function(button) {
+            button.style.display = 'none';
+        });
+    } else if (currentUrl.includes('/en/')) {
+        document.querySelectorAll('#enButton').forEach(function(button) {
+            button.style.display = 'none';
+        });
+    }
+});
+</script>  
+    <section class="hero">
+        <div class="hero-head">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{% url "kafe:foods" %}">
+                        <img src="{% static 'uploads/CB3.png' %}" width="50px" height="50px">
+                    </a>
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                       data-target="navbarBasicExample">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                {% if user.is_authenticated %}
+                <a id="ruButton" class="navbar-item order hide-on-ru" href="http://127.0.0.1:8000/ru/foods/">
+                    <button style="transition: 1s;" class="button is-success is-rounded is-outlined">
+                        РУССКИЙ
+                    </button>
+                </a>
+                
+                <a id="enButton" class="navbar-item order hide-on-en" href="http://127.0.0.1:8000/en/foods/">
+                    <button style="transition: 1s;" class="button is-success is-rounded is-outlined">
+                        ENGLISH
+                    </button>
+                </a>
+                
+                <div id="enButton" class="navbar-end">
+                    <form action="{% url 'kafe:foods' %}" method="get" >
+                        <div class="field has-addons mt-2 mr-2">
+                            <div class="control">
+                                <input class="input is-rounded" type="search" placeholder="Введите название блюда" name="search">
+                            </div>
+                            <div class="control">
+                                <button style="transition: 1s;" class="button is-info is-rounded is-outlined" type="submit">
+                                    ПОИСК
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <a href="{% url 'kafe:discounted_foods' %}" class="navbar-item">
+                        <button style="transition: 1s;" class="button is-danger is-rounded is-outlined">
+                            В СКИДКЕ
+                        </button>
+                    </a>
+                    <a class="navbar-item order" href="{% url 'kafe:orders' %}">
+                        <button style="transition: 1s;" class="button is-success is-rounded is-outlined">
+                            ЗАКАЗЫ
+                        </button>
+                    </a>
+                    <a class="navbar-item order" href="{% url 'kafe:cart' %}">
+                        <button style="transition: 1s;" class="button is-warning is-rounded is-outlined">
+                            <ion-icon name="cart-outline" class="mr-2"></ion-icon>
+                            КОРЗИНКА
+                        </button>
+                    </a>
+                    <span class="navbar-item">
+                        <div class="dropdown is-hoverable">
+                            <div class="dropdown-trigger">
+                                <button style="transition: 1s;" class="button is-success is-rounded is-outlined" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    ПРОФИЛЬ:  <span class="has-text-weight-bold mx-1">{{ user }}</span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a href="{% url 'users:profile' %}" class="dropdown-item">
+                                        Мой профиль
+                                    </a>
+                                    <a href="{% url 'users:edit_profile' %}" class="dropdown-item">
+                                        Редактировать профиль
+                                    </a>
+                                    <a href="{% url 'users:reset_password' %}" class="dropdown-item">
+                                        Сброс пароля
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a href="{% url 'users:sign_out' %}" class="dropdown-item">
+                                        Выход
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div> 
+
+                <div id="ruButton" class="navbar-end">
+                    <form action="{% url 'kafe:foods' %}" method="get">
+                        <div class="field has-addons mt-2 mr-2">
+                            <div class="control">
+                                <input class="input is-rounded" type="search" placeholder="Enter dish name" name="search">
+                            </div>
+                            <div class="control">
+                                <button style="transition: 1s;" class="button is-info is-rounded is-outlined" type="submit">
+                                    SEARCH
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <a href="{% url 'kafe:discounted_foods' %}" class="navbar-item">
+                        <button style="transition: 1s;" class="button is-danger is-rounded is-outlined">
+                            DISCOUNTED
+                        </button>
+                    </a>
+                    <a class="navbar-item order" href="{% url 'kafe:orders' %}">
+                        <button style="transition: 1s;" class="button is-success is-rounded is-outlined">
+                            ORDERS
+                        </button>
+                    </a>
+                    <a class="navbar-item order" href="{% url 'kafe:cart' %}">
+                        <button style="transition: 1s;" class="button is-warning is-rounded is-outlined">
+                            <ion-icon name="cart-outline" class="mr-2"></ion-icon>
+                            CART
+                        </button>
+                    </a>
+                    <span class="navbar-item">
+                        <div class="dropdown is-hoverable">
+                            <div class="dropdown-trigger">
+                                <button style="transition: 1s;" class="button is-success is-rounded is-outlined" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    PROFILE:  <span class="has-text-weight-bold mx-1">{{ user }}</span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a href="{% url 'users:profile' %}" class="dropdown-item">
+                                        My Profile
+                                    </a>
+                                    <a href="{% url 'users:edit_profile' %}" class="dropdown-item">
+                                        Edit Profile
+                                    </a>
+                                    <a href="{% url 'users:reset_password' %}" class="dropdown-item">
+                                        Reset Password
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a href="{% url 'users:sign_out' %}" class="dropdown-item">
+                                        Sign Out
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>                               
+            {% endif %}
+        </nav>
+    </div>
+    <div class="hero-body">
+        {% block auth %}
+        {% endblock %}
+
+        {% block slider %}
+        {% endblock %}
+
+    </div>
+
+    <div class="container">
+        {% block foods_content %}
+        {% endblock %}
+    </div>
+
+</section>
+
+<footer id="enButton" class="footer">
+    <div class="footer-container">
+<center>
+    <div class="footer-section">
+        <h4 class="title">О нас</h4>
+        <p class="subtitle">Мы предоставляем широкий ассортимент качественных товаров с быстрой доставкой.</p>
+    </div>
+</center>
+      <br>
+      <br>
+      <div class="columns">
+        <div class="column">
+            <div class="footer-section">
+                <h4 class="title">Сервис и поддержка</h4>
+                <ul class="subtitle">
+                  <li><a href="{% url 'kafe:helper' %}">Как сделать заказ</a></li>
+                  <li><a href="{% url 'kafe:helper' %}">Свяжитесь с нами</a></li>
+                </ul>
+              </div>
+        </div>
+        <div class="column">
+            <div class="footer-section">
+                <h4 class="title">Информация</h4>
+                <ul class="subtitle">
+                  <li><a href="{% url 'kafe:helper' %}">Политика конфиденциальности</a></li>
+                </ul>
+              </div>
+        </div>
+        <div class="column">
+            <div class="footer-section">
+                <h4 class="title">Подписка</h4>
+                <p class="subtitle">Подпишитесь на нашу рассылку и получайте последние новости о новинках и акциях.</p>
+              </div>
+            </div>
+        </div>
+    </div>
+<center>
+    <div class="footer-bottom">
+        <p style="margin-top: 50px;" class="title">&copy; 2024 <span style="color: green;">CityBlend</span>. Все права защищены.</p>
+    </div>
+</center>
+</footer>
+
+<footer id="ruButton" class="footer">
+    <div class="footer-container">
+        <center>
+            <div class="footer-section">
+                <h4 class="title">About Us</h4>
+                <p class="subtitle">We offer a wide range of high-quality products with fast delivery.</p>
+            </div>
+        </center>
+        <br>
+        <br>
+        <div class="columns">
+            <div class="column">
+                <div class="footer-section">
+                    <h4 class="title">Service and Support</h4>
+                    <ul class="subtitle">
+                        <li><a href="{% url 'kafe:helper' %}">How to Place an Order</a></li>
+                        <li><a href="{% url 'kafe:helper' %}">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column">
+                <div class="footer-section">
+                    <h4 class="title">Information</h4>
+                    <ul class="subtitle">
+                        <li><a href="{% url 'kafe:helper' %}">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column">
+                <div class="footer-section">
+                    <h4 class="title">Subscription</h4>
+                    <p class="subtitle">Subscribe to our newsletter and receive the latest news about new products and promotions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <center>
+        <div class="footer-bottom">
+            <p style="margin-top: 50px;" class="title">&copy; 2024 <span style="color: green;">CityBlend</span>. All rights reserved.</p>
+        </div>
+    </center>
+</footer>
+</body>
+</html>
+
+<style>
+    @media screen and (min-width: 10px) and (max-width: 650px) {
+    column{
+    column-width: 100vh;
+    margin: 10px;
+    }
+    }
+ </style>

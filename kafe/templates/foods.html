@@ -1,0 +1,63 @@
+{% extends 'base_layout.html' %}
+{% load categories %}
+
+{% block foods_content %}
+<div class="container">
+    {% categories %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        // Check the current URL and hide buttons based on the language of the page
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('#ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('#enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+</script> 
+<div class="container">
+    <div style="display: flex; flex-wrap: wrap;" class="columns">
+        {% for food in foods %}
+        <div class="column is-3 m-6">
+            <div style="border-radius: 30px; box-shadow: 5px 5px 20px black; width: 270px;" class="card">
+                <a href="{% url 'kafe:food_detail' food.pk %}">
+                <img style="width: 270px; height: 250px; border-radius: 30px 30px 0 0;" src="{{ food.thumb.url }}">
+                <div class="content"> 
+                    <div class="row m-1">
+                        <center>
+                            <div class="details">
+                                <span class="title is-5">{{ food.title }}</span>
+                                {% if food.is_new %}
+                                <span class="tag is-danger is-rounded">New!</span>
+                                {% endif %}
+                                {% if food.is_discounted %}
+                                    <span class="tag is-primary is-rounded">Discount!</span>
+                                {% endif %}
+                            </div>
+                            <div style="color: rgb(20, 175, 20);" class="price subtitle">{{ food.price }}$</div>
+                        </div>
+                        <div id="enButton" class="buttons is-centered">
+                            <a href="{% url 'kafe:foods' %}?food={{ food.id }}">
+                                <button style="font-size: 15px;" class="button is-rounded is-success">В корзину</button>
+                            </a>
+                        </div>
+                        <div id="ruButton" class="buttons is-centered">
+                            <a href="{% url 'kafe:foods' %}?food={{ food.id }}">
+                                <button style="font-size: 15px;" class="button is-rounded is-success">Into a basket</button>
+                            </a>
+                        </div>
+                    </center>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

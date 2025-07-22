@@ -1,0 +1,188 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="{% static 'bulma.css' %}">
+<link rel="stylesheet" href="{% static 'bulma.min.css' %}">
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #ffffff;
+  width: 100%;
+  overflow: hidden;
+}
+.ring {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ring i {
+  position: absolute;
+  inset: 0;
+  border: 2px solid #ffffff;
+  transition: 0.5s;
+}
+.ring i:nth-child(1) {
+  border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+  animation: animate 6s linear infinite;
+}
+.ring i:nth-child(2) {
+  border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
+  animation: animate 4s linear infinite;
+}
+.ring i:nth-child(3) {
+  border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
+  animation: animate2 10s linear infinite;
+}
+.ring:hover i {
+  border: 6px solid var(--clr);
+  filter: drop-shadow(0 0 20px var(--clr));
+}
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes animate2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.login {
+  position: absolute;
+  width: 300px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.login h2 {
+  font-size: 2em;
+  color: #000000;
+}
+.login .inputBx {
+  position: relative;
+  width: 100%;
+}
+.login .inputBx input {
+  position: relative;
+  width: 100%;
+  padding: 12px 20px;
+  background: transparent;
+  border: 2px solid #000000;
+  border-radius: 40px;
+  font-size: 1.2em;
+  color: #000000;
+  box-shadow: none;
+  outline: none;
+}
+.login .inputBx input[type="submit"] {
+  width: 100%;
+  background: #0078ff;
+  background: linear-gradient(45deg, #ff357a, #fff172);
+  border: none;
+  cursor: pointer;
+}
+.login .inputBx input::placeholder {
+  color: rgba(34, 33, 33, 0.75);
+}
+.login .links {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.login .links a {
+  color: #000000;
+  text-decoration: none;
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('#ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('#enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+  </script>
+<title>CityBlend</title>
+    
+
+
+{% block auth %}
+<div style="right: 200px;">
+<center>
+    <div id="enButton" class="ring">
+        <i style="--clr:#00ff0a;"></i>
+        <i style="--clr:#ff0057;"></i>
+        <i style="--clr:#fffd44;"></i>
+        <div class="login">
+            <form class="form  has-text-centered" method="post">
+              <h1 class="title is-size-2 has-text-centered">Редактировать профиль</h1>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="inputBx" class="field">
+                  <label for="{{ field.id_for_label }}" class="label">{{ field.label }}</label>
+                  {{ field }}
+                    </div>
+                    {% endfor %}
+                    <div class="inputBx mt-3">
+                    <input type="submit" value="Submit">
+                </div>
+        </form>
+    </div>
+  </div>
+  </center>
+
+    <center>
+        <div id="ruButton" class="ring">
+            <i style="--clr:#00ff0a;"></i>
+            <i style="--clr:#ff0057;"></i>
+            <i style="--clr:#fffd44;"></i>
+            <div class="login">
+                <form class="form  has-text-centered" method="post">
+                  <h1 class="title is-size-2 has-text-centered">Edit profile</h1>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="inputBx" class="field">
+                      <label for="{{ field.id_for_label }}" class="label">{{ field.label }}</label>
+                      {{ field }}
+                        </div>
+                        {% endfor %}
+                        <div class="inputBx mt-3">
+                        <input type="submit" value="Submit">
+                    </div>
+            </form>
+        </div>
+      </div>
+      </center>
+</div>      
+{% endblock %}

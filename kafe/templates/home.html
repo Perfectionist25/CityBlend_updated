@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityBlend</title>
+    <link rel="stylesheet" href="{% static 'bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body {
+            margin: 0; 
+            padding: 0;
+        }
+
+        .fone {
+            background-image: url('{% static "/uploads/photo_2024-02-02_17-42-23.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .addres {
+            text-align: center;
+        }
+    </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        // Проверяем текущий URL и скрываем кнопки в зависимости от языка страницы
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('#ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('#enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+</script>   
+</head>
+<body>
+    <div id="enButton" class="fone">
+        <div class="addres">
+            <h1 class="title"><span style="color: white;">Приветствуем на нашем сайте</span> <span style="color: 
+            #4ac88f; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">CityBlens</span></h1>
+            <a href="http://127.0.0.1:8000/users/sign_in/">
+                <button style="transition: 1s;" class="button is-outlined is-success is-rounded">Нажмите сюда для входа</button>
+            </a>
+        </div>
+    </div>
+
+    <div id="ruButton" class="fone">
+        <div class="addres">
+            <h1 class="title"><span style="color: white;">Welcome to our website</span> <span style="color: 
+            #4ac88f; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">CityBlens</span></h1>
+            <a href="http://127.0.0.1:8000/users/sign_in/">
+                <button style="transition: 1s;" class="button is-outlined is-success is-rounded">Click here to sign in</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

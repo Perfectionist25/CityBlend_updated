@@ -1,0 +1,69 @@
+{% extends 'base_layout.html' %}
+
+{% block foods_content %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('.ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('.enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+</script>
+<div class="enButton">
+    <div class="container m-6">
+        <div class="box">
+            <form method="post" action="{% url 'kafe:create_order' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="title">
+                    Информация о доставке:
+                </div>
+                {% for field in form %}
+                <div class="field">
+                    <label for="{{ field.id_for_label }}" class="label"></label>
+                    {{ field.label }}
+                    {{ field }}
+                    {% if field.errors %}
+                    <p class="help is-danger">{{ field.errors }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="button is-fullwidth is-success">Подтвердить</button>
+                <a class="button is-danger is-fullwidth mt-3" href="{% url 'kafe:cart' %}">Вернуться к корзине</a>
+                <a class="button is-info is-fullwidth mt-3" href="{% url 'kafe:info_order' %}">Посмотреть список заказов</a>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="ruButton">
+    <div class="container m-6">
+        <div class="box">
+            <form method="post" action="{% url 'kafe:create_order' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="title">
+                    Delivery Information:
+                </div>
+                {% for field in form %}
+                <div class="field">
+                    <label for="{{ field.id_for_label }}" class="label"></label>
+                    {{ field.label }}
+                    {{ field }}
+                    {% if field.errors %}
+                    <p class="help is-danger">{{ field.errors }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="button is-fullwidth is-success">Confirm</button>
+                <a class="button is-danger is-fullwidth mt-3" href="{% url 'kafe:cart' %}">Return to Cart</a>
+                <a class="button is-info is-fullwidth mt-3" href="{% url 'kafe:info_order' %}">View the list of orders</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

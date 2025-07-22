@@ -1,0 +1,88 @@
+{% extends 'order_creation_page.html' %}
+{% block foods_content %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('.ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('.enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+</script>
+
+<div class="enButton mb-6">
+    <div class="container">
+        <div class="box">
+            <div class="title">Итог заказа</div>
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr class="has-text-weight-bold">
+                        <td></td>
+                        <td>Блюдо</td>
+                        <td>Цена</td>
+                        <td>Количество</td>
+                        <td>Итого</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.food.thumb.url }}" alt="" width="50" height="50">
+                        </td>
+                        <td>{{ item }}</td>
+                        <td>{{ item.food.price }} $</td>
+                        <td>x {{ item.quantity }}</td>
+                        <td>{{ item.total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p class="title is-size-4">Итого: {{ total_price }} $ </p>
+            <a class="button is-danger is-fullwidth" href="{% url 'kafe:create_order' %}">Назад</a>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="ruButton mb-6">
+    <div class="container">
+        <div class="box">
+            <div class="title">Order Summary</div>
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr class="has-text-weight-bold">
+                        <td></td>
+                        <td>Dish</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Total</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.food.thumb.url }}" alt="" width="50" height="50">
+                        </td>
+                        <td>{{ item }}</td>
+                        <td>{{ item.food.price }} $</td>
+                        <td>x {{ item.quantity }}</td>
+                        <td>{{ item.total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p class="title is-size-4">Total: {{ total_price }} $ </p>
+            <a class="button is-danger is-fullwidth" href="{% url 'kafe:create_order' %}">Back</a>
+        </div>
+    </div>
+</div>
+    {% endblock %}

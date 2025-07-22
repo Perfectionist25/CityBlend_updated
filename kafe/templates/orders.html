@@ -1,0 +1,118 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        // Проверяем текущий URL и скрываем кнопки в зависимости от языка страницы
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('#ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('#enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+</script>
+{% block foods_content %}
+    <div id="enButton" class="container">
+        <div class="custom-card">
+            <div class="custom-content">
+                {% if orders %}
+                    <div class="custom-title has-text-info">Мои последние заказы</div>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Номер заказа</th>
+                                <th>Итого</th>
+                                <th>Статус</th>
+                                <th>Оплачено</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order }}</td>
+                                    <td>{{ order.total_price }} $</td>
+                                    <td class="has-text-success">В обработке</td>
+                                    <td class="has-text-danger">Не оплачено</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="custom-title has-text-warning">У вас пока нет заказов</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div id="ruButton" class="container">
+        <div class="custom-card">
+            <div class="custom-content">
+                {% if orders %}
+                    <div class="custom-title has-text-info">My recent orders</div>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Order Number</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order }}</td>
+                                    <td>{{ order.total_price }} $</td>
+                                    <td class="has-text-success">Processing</td>
+                                    <td class="has-text-danger">Unpaid</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="custom-title has-text-warning">You have no orders yet</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        .custom-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .custom-content {
+            padding: 20px;
+        }
+        .custom-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .custom-table th, .custom-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .custom-table th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        .custom-table td {
+            text-align: center;
+        }
+    </style>
+{% endblock %}

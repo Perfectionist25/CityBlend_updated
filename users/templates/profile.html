@@ -1,0 +1,18 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block auth %}
+<div class="container">
+        <div class="container">
+            <center>
+                <a href="{% url 'users:edit_profile_pic' %}">
+                    {% if profile_pic %}
+                    <img style="max-width: 300px; max-height: 400px; border-radius: 10%;" src="{{ profile_pic }}">
+                    {% else %}
+                    <img style="max-width: 300px; max-height: 400px; border-radius: 10%;" src="{% static 'uploads/i.webp' %}">
+                    {% endif %}
+                </a>
+                <h1 class="title">{{ user }}</h1>
+            </center>
+        </div>
+{% endblock %}

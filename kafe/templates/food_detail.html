@@ -1,0 +1,143 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+            
+        if (currentUrl.includes('/ru/')) {
+            document.querySelectorAll('#ruButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        } else if (currentUrl.includes('/en/')) {
+            document.querySelectorAll('#enButton').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        }
+    });
+</script>
+
+{% block foods_content %}
+    <div class="section product-detail">
+        <div class="container mr-6 mt-6">
+            <figure class="image product-detail-image">
+                <center>
+                    <img style="border-radius: 20px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); max-width: 700px; max-height: 650px;" src="{{ food.thumb.url }}" alt="Placeholder image">
+                </center>
+            </figure>
+        </div>
+        <div class="container mt-2">
+            {% if user.is_authenticated %}
+                <p class="title is-size-2">
+            {% else %}
+                <div id="enButton" class="content">
+                    <p class="title is-size-2">
+            {% endif %}
+            {{ food.title }}
+            {% if food.is_new %}
+                <span class="tag is-danger is-rounded">New!</span>
+            {% endif %}
+            {% if food.is_discounted %}
+                <span class="tag is-primary is-rounded">Discount!</span>
+            {% endif %}
+            <br>
+            <hr>
+            <div class="container">
+                <h3 class="subtitle is-5"> {{ food.description }}</h3>
+            </div>
+            </p>
+            <p id="ruButton" class="title is-size-3 has-text-success"><span class="title is-4">Price per serving:</span> {{ food.price }}$</p>
+            <p id="enButton" class="title is-size-3 has-text-success"><span class="title is-4">Цена за порцию:</span> {{ food.price }}$</p>
+            <p class="title is-size-5 has-text-grey-light">Reviews: {{ food.comment_count }}</p>
+            <a id="ruButton" href="{% url 'kafe:foods' %}?food={{ food.id }}">
+                <button style="font-size: 15px; transition: 1s;" class="button is-outlined is-rounded is-success">🛒 Into a basket 🛒</button>
+            </a>
+            <a id="enButton" href="{% url 'kafe:foods' %}?food={{ food.id }}">
+                <button style="font-size: 15px; transition: 1s;" class="button is-outlined is-rounded is-success">🛒 Добавить в корзину 🛒</button>
+            </a>
+            <hr>
+            {% if has_ordered %}
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.name == 'rate' %}
+                            <div class="select is-fullwidth mb-4">
+                                <label for="{{ field.id_for_label }}"
+                                       class="label is-size-4">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% else %}
+                            <div class="field">
+                                <label for="{{ field.id_for_label }}" class="label is-size-4">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="mt-6">
+                        <button id="enButton" class='button is-success is-rounded' type="submit">Опубликовать</button>
+                        <button id="ruButton" class='button is-success is-rounded' type="submit">Submit</button>
+                        <a id="enButton" class='button is-danger is-rounded' href="{% url 'kafe:foods' %}">Вернуться в главное меню</a>
+                        <a id="ruButton" class='button is-danger is-rounded' href="{% url 'kafe:foods' %}">Back to main
+                            page</a>
+                    </div>
+                </form>
+            {% else %}
+                <h1 class="title" id="ruButton">You need to order this product to leave a review.</h1>
+                <h1 class="title" id="enButton">Вам необходимо заказать этот товар, чтобы оставить отзыв.</h1>
+            {% endif %}
+            </div>
+        </div>
+        <hr>
+        <div class="section">
+            {% if reviews %}
+                <div id="ruButton" class="title is-size-3 has-text-centered">Reviews of other clients</div>
+                <div id="enButton" class="title is-size-3 has-text-centered">Отзывы других клиентов</div>
+                <div class="columns is-centered">
+                    <div class="column is-8">
+                        <div class="columns is is-multiline is-centered mt-6">
+                            {% for review in reviews %}
+                                <div class="column is-6">
+                                    <div style="border-radius: 30px;" class="card">
+                                        <div class="card-content">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <figure class="image is-48x48">
+                                                        {% if review.user.profile.profile_pic %}
+                                                            <img class="image is-48x48 is-rounded" src="{{ review.user.profile.profile_pic.url }}" alt="Avatar">
+                                                        {% else %}
+                                                            <img class="image is-48x48 is-rounded" src="{% static 'uploads/i.webp' %}" alt="Avatar">
+                                                        {% endif %}
+                                                    </figure>
+                                                </div>
+                                                <div class="media-content">
+                                                    <p class="title is-size-4">{{ review.user.first_name }}</p>
+                                                    <p class="subtitle">@{{ review.user }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="content">
+                                                <div>
+                                                    {{ review.rate }}/⭐️⭐️⭐️⭐️⭐️
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <span class="mx-2 has-text-grey-light">{{ review.date }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="subtitle has-text-grey">
+                                                {{ review.text }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            {% else %}
+                <div id="ruButton" class="title is-size-3 has-text-centered">No reviews yet. Be first to leave one</div>
+                <div id="enButton" class="title is-size-3 has-text-centered">Пока нет отзывов. Будьте первым, кто оставит один</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

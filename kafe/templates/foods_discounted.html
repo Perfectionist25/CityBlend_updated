@@ -1,0 +1,88 @@
+{% extends 'base_layout.html' %}
+
+{% block foods_content %}
+<div class="container">
+    <center>
+        <h1 class="title is-big">
+            {% if request.LANGUAGE_CODE == 'en' %}
+                DISCOUNTED
+            {% else %}
+                СО СКИДКОЙ
+            {% endif %}
+        </h1>
+    </center>
+</div>
+<div class="container">
+    <div style="display: flex; flex-wrap: wrap;" class="columns">
+        {% for food in foods %}
+        <div class="column {% if foods|length == 1 %}is-12{% else %}is-3 m-6{% endif %}">
+            <div style="border-radius: 30px; box-shadow: 5px 5px 20px black; width: 270px;" class="card">
+                <a href="{% url 'kafe:food_detail' food.pk %}">
+                <img style="width: 270px; height: 250px; border-radius:  30px 30px 0 0;" src="{{ food.thumb.url }}">
+                <div class="content"> 
+                    <div class="row m-1">
+                        <center>
+                            <div class="details">
+                                <span class="title is-5">{{ food.title }}</span>
+                                {% if food.is_new %}
+                                <span class="tag is-danger is-rounded">New!</span>
+                                {% endif %}
+                                {% if food.is_discounted %}
+                                    <span class="tag is-primary is-rounded">Discount!</span>
+                                {% endif %}
+                            </div>
+                            <div style="color: rgb(20, 175, 20);" class="price subtitle">{{ food.price }}$</div>
+                        </div>
+                        <div id="enButton" class="buttons is-centered">
+                            <a href="{% url 'kafe:foods' %}?food={{ food.id }}">
+                                <button style="font-size: 15px;" class="button is-rounded is-success">
+                                    {% if request.LANGUAGE_CODE == 'en' %}
+                                        Add to Cart
+                                    {% else %}
+                                        В корзину
+                                    {% endif %}
+                                </button>
+                            </a>
+                        </div>
+                        <div id="ruButton" class="buttons is-centered">
+                            <a href="{% url 'kafe:foods' %}?food={{ food.id }}">
+                                <button style="font-size: 15px;" class="button is-rounded is-success">
+                                    {% if request.LANGUAGE_CODE == 'en' %}
+                                        Into a basket
+                                    {% else %}
+                                        В корзину
+                                    {% endif %}
+                                </button>
+                            </a>
+                        </div>                        
+                    </center>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var currentUrl = window.location.href;
+
+    if (currentUrl.includes('/ru/')) {
+        document.querySelectorAll('#enButton button').forEach(function(button) {
+            button.textContent = 'В корзину';
+        });
+        document.querySelectorAll('#ruButton button').forEach(function(button) {
+            button.textContent = 'В корзину';
+        });
+    } else if (currentUrl.includes('/en/')) {
+        document.querySelectorAll('#enButton button').forEach(function(button) {
+            button.textContent = 'Add to Cart';
+        });
+        document.querySelectorAll('#ruButton button').forEach(function(button) {
+            button.textContent = 'Into a basket';
+        });
+    }
+});
+</script>
