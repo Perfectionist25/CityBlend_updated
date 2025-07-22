@@ -12,6 +12,7 @@ ALLOWED_HOSTS = [
     "localhost"
 ]
 
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
 
 INSTALLED_APPS = [
     'modeltranslation',
