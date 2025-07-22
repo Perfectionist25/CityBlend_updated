@@ -130,4 +130,4 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-print("Cloudinary:", os.getenv('CLOUDINARY_CLOUD_NAME'))
+
