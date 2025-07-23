@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
+from cloudinary.models import CloudinaryField
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -19,7 +20,7 @@ class Food(models.Model):
     is_new = models.BooleanField(default=False)
     is_discounted = models.BooleanField(default=False)
     category = models.ForeignKey('kafe.Category', on_delete=models.CASCADE)
-    thumb = models.ImageField(default='default.png', upload_to="https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg", null=True)
+    thumb = models.CloudinaryField(default='default.png', null=True)
 
     def __str__(self):
         return self.title
@@ -36,7 +37,7 @@ class UserProfile(models.Model):
     favorites = models.ManyToManyField(Food)
 
 class Slide(models.Model):
-    image = models.ImageField(default='slide.jpg')
+    image = models.CloudinaryField(default='slide.jpg')
 
 
 class CartItem(models.Model):

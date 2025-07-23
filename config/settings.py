@@ -1,5 +1,8 @@
 import os
 from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 import dj_database_url
 from dotenv import load_dotenv
 load_dotenv()
@@ -20,6 +23,8 @@ CSRF_TRUSTED_ORIGINS = [
 INSTALLED_APPS = [
     'modeltranslation',
     'jazzmin',
+    'cloudinary',
+    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
