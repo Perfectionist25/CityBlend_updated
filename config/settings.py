@@ -123,11 +123,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'files/uploads')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-INSTALLED_APPS += [
-    'cloudinary_storage',
-    'cloudinary',
-]
-
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
