@@ -20,7 +20,7 @@ class Food(models.Model):
     is_new = models.BooleanField(default=False)
     is_discounted = models.BooleanField(default=False)
     category = models.ForeignKey('kafe.Category', on_delete=models.CASCADE)
-    thumb = models.CloudinaryField(default='default.png', null=True)
+    thumb = CloudinaryField(default='default.png', null=True)
 
     def __str__(self):
         return self.title
@@ -37,7 +37,7 @@ class UserProfile(models.Model):
     favorites = models.ManyToManyField(Food)
 
 class Slide(models.Model):
-    image = models.CloudinaryField(default='slide.jpg')
+    image = CloudinaryField(default='slide.jpg')
 
 
 class CartItem(models.Model):
