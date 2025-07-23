@@ -19,7 +19,7 @@ class Food(models.Model):
     is_new = models.BooleanField(default=False)
     is_discounted = models.BooleanField(default=False)
     category = models.ForeignKey('kafe.Category', on_delete=models.CASCADE)
-    thumb = models.ImageField(default='default.png', upload_to='products/', null=True)
+    thumb = models.ImageField(default='default.png', upload_to="https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg", null=True)
 
     def __str__(self):
         return self.title
