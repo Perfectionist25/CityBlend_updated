@@ -57,6 +57,7 @@ class Order(models.Model):
     name = models.CharField(max_length=100, validators=[MinLengthValidator(3)])
     phone = models.CharField(max_length=13)
     total_price = models.IntegerField()
+    address = models.CharField(max_length=255)
 
     def str(self):
         return f"Order #{self.pk}"
